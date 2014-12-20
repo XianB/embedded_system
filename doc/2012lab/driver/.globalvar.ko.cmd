@@ -1,0 +1,1 @@
+cmd_/home/zhangxiao/embededSystem/example/driver/globalvar.ko := ld -r -m elf_i386 -T /usr/src/linux-2.6.32.60/scripts/module-common.lds --build-id -o /home/zhangxiao/embededSystem/example/driver/globalvar.ko /home/zhangxiao/embededSystem/example/driver/globalvar.o /home/zhangxiao/embededSystem/example/driver/globalvar.mod.o
