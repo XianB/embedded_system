@@ -4,7 +4,7 @@
 #include <asm/uaccess.h>
 #include <linux/init.h>
 #include <linux/poll.h>
-
+#include <linux/slab.h>
 
 
 #define READ_BUF_SIZE	1024
@@ -107,7 +107,8 @@ int my_poll(struct file *filp, poll_table *wait)
     mask |= 1<<DRIVER_EVENT_BIT;
     return mask;
 }
-int  my_ioctl (struct inode *inode,struct file *filp,unsigned int cmd,unsigned long arg)
+//int  my_ioctl (struct inode *inode,struct file *filp,unsigned int cmd,unsigned long arg)
+int  my_ioctl (struct file *filp,unsigned int cmd,unsigned long arg)
 {
 	switch(cmd){
 		case 1 :{
@@ -136,7 +137,7 @@ open  :    my_open,			/* openº¯Ê */
 	   release:	my_release,	/* writeº¯Ê */   
 	   read:	my_read,		/* readº¯Ê */
 	   write:	my_write,		/* writeº¯Ê */
-	   ioctl:	my_ioctl,		/* ioctlº¯Ê */
+	   unlocked_ioctl:	my_ioctl,		/* ioctlº¯Ê */
 	   poll:	my_poll,		/* ioctlº¯Ê */
  
 };

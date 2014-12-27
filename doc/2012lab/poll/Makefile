@@ -1,5 +1,5 @@
 obj-m += char_dev.o
-obj-m += char_dev_new.o
+#obj-m += char_dev_new.o
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
 clean:
