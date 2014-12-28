@@ -1,8 +1,13 @@
-AUTOMAKE_OPTIONS = foreign
-bin_PROGRAMS = pipetest_simple
-pipetest_simple_SOURCES = pipetest_simple.c 
-pipetest_simple_LDADD = $(LIBOJBS) -lm
+sbin_PROGRAMS = pipetest_simple pipetest_second arm_pipetest_simple arm_pipetest_second fifo_read fifo_write arm_fifo_read arm_fifo_write
 
-bin_PROGRAMS = pipetest_second
+pipetest_simple_SOURCES = pipetest_simple.c 
 pipetest_second_SOURCES = pipetest_simple.c 
-pipetest_second_LDADD = $(LIBOJBS) -lm
+
+arm_pipetest_simple_SOURCES = pipetest_simple.c 
+arm_pipetest_second_SOURCES = pipetest_simple.c 
+
+fifo_read_SOURCES = fifo_read.c
+fifo_write_SOURCES = fifo_write.c
+
+arm_fifo_read_SOURCES = fifo_read.c
+arm_fifo_write_SOURCES = fifo_write.c

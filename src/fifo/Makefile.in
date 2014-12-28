@@ -32,7 +32,10 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = pipetest_second$(EXEEXT)
+sbin_PROGRAMS = pipetest_simple$(EXEEXT) pipetest_second$(EXEEXT) \
+	arm_pipetest_simple$(EXEEXT) arm_pipetest_second$(EXEEXT) \
+	fifo_read$(EXEEXT) fifo_write$(EXEEXT) arm_fifo_read$(EXEEXT) \
+	arm_fifo_write$(EXEEXT)
 subdir = fifo
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -43,11 +46,32 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__installdirs = "$(DESTDIR)$(bindir)"
-PROGRAMS = $(bin_PROGRAMS)
+am__installdirs = "$(DESTDIR)$(sbindir)"
+PROGRAMS = $(sbin_PROGRAMS)
+am_arm_fifo_read_OBJECTS = fifo_read.$(OBJEXT)
+arm_fifo_read_OBJECTS = $(am_arm_fifo_read_OBJECTS)
+arm_fifo_read_LDADD = $(LDADD)
+am_arm_fifo_write_OBJECTS = fifo_write.$(OBJEXT)
+arm_fifo_write_OBJECTS = $(am_arm_fifo_write_OBJECTS)
+arm_fifo_write_LDADD = $(LDADD)
+am_arm_pipetest_second_OBJECTS = pipetest_simple.$(OBJEXT)
+arm_pipetest_second_OBJECTS = $(am_arm_pipetest_second_OBJECTS)
+arm_pipetest_second_LDADD = $(LDADD)
+am_arm_pipetest_simple_OBJECTS = pipetest_simple.$(OBJEXT)
+arm_pipetest_simple_OBJECTS = $(am_arm_pipetest_simple_OBJECTS)
+arm_pipetest_simple_LDADD = $(LDADD)
+am_fifo_read_OBJECTS = fifo_read.$(OBJEXT)
+fifo_read_OBJECTS = $(am_fifo_read_OBJECTS)
+fifo_read_LDADD = $(LDADD)
+am_fifo_write_OBJECTS = fifo_write.$(OBJEXT)
+fifo_write_OBJECTS = $(am_fifo_write_OBJECTS)
+fifo_write_LDADD = $(LDADD)
 am_pipetest_second_OBJECTS = pipetest_simple.$(OBJEXT)
 pipetest_second_OBJECTS = $(am_pipetest_second_OBJECTS)
-pipetest_second_DEPENDENCIES =
+pipetest_second_LDADD = $(LDADD)
+am_pipetest_simple_OBJECTS = pipetest_simple.$(OBJEXT)
+pipetest_simple_OBJECTS = $(am_pipetest_simple_OBJECTS)
+pipetest_simple_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -56,8 +80,14 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(pipetest_second_SOURCES)
-DIST_SOURCES = $(pipetest_second_SOURCES)
+SOURCES = $(arm_fifo_read_SOURCES) $(arm_fifo_write_SOURCES) \
+	$(arm_pipetest_second_SOURCES) $(arm_pipetest_simple_SOURCES) \
+	$(fifo_read_SOURCES) $(fifo_write_SOURCES) \
+	$(pipetest_second_SOURCES) $(pipetest_simple_SOURCES)
+DIST_SOURCES = $(arm_fifo_read_SOURCES) $(arm_fifo_write_SOURCES) \
+	$(arm_pipetest_second_SOURCES) $(arm_pipetest_simple_SOURCES) \
+	$(fifo_read_SOURCES) $(fifo_write_SOURCES) \
+	$(pipetest_second_SOURCES) $(pipetest_simple_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -147,11 +177,14 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-AUTOMAKE_OPTIONS = foreign
 pipetest_simple_SOURCES = pipetest_simple.c 
-pipetest_simple_LDADD = $(LIBOJBS) -lm
 pipetest_second_SOURCES = pipetest_simple.c 
-pipetest_second_LDADD = $(LIBOJBS) -lm
+arm_pipetest_simple_SOURCES = pipetest_simple.c 
+arm_pipetest_second_SOURCES = pipetest_simple.c 
+fifo_read_SOURCES = fifo_read.c
+fifo_write_SOURCES = fifo_write.c
+arm_fifo_read_SOURCES = fifo_read.c
+arm_fifo_write_SOURCES = fifo_write.c
 all: all-am
 
 .SUFFIXES:
@@ -165,9 +198,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign fifo/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu fifo/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign fifo/Makefile
+	  $(AUTOMAKE) --gnu fifo/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -186,10 +219,10 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-install-binPROGRAMS: $(bin_PROGRAMS)
+install-sbinPROGRAMS: $(sbin_PROGRAMS)
 	@$(NORMAL_INSTALL)
-	test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
-	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
+	test -z "$(sbindir)" || $(MKDIR_P) "$(DESTDIR)$(sbindir)"
+	@list='$(sbin_PROGRAMS)'; test -n "$(sbindir)" || list=; \
 	for p in $$list; do echo "$$p $$p"; done | \
 	sed 's/$(EXEEXT)$$//' | \
 	while read p p1; do if test -f $$p; \
@@ -206,26 +239,47 @@ install-binPROGRAMS: $(bin_PROGRAMS)
 	while read type dir files; do \
 	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
 	    test -z "$$files" || { \
-	      echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(bindir)$$dir'"; \
-	      $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(bindir)$$dir" || exit $$?; \
+	      echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(sbindir)$$dir'"; \
+	      $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(sbindir)$$dir" || exit $$?; \
 	    } \
 	; done
 
-uninstall-binPROGRAMS:
+uninstall-sbinPROGRAMS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
+	@list='$(sbin_PROGRAMS)'; test -n "$(sbindir)" || list=; \
 	files=`for p in $$list; do echo "$$p"; done | \
 	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
 	      -e 's/$$/$(EXEEXT)/' `; \
 	test -n "$$list" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(bindir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(bindir)" && rm -f $$files
+	echo " ( cd '$(DESTDIR)$(sbindir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(sbindir)" && rm -f $$files
 
-clean-binPROGRAMS:
-	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+clean-sbinPROGRAMS:
+	-test -z "$(sbin_PROGRAMS)" || rm -f $(sbin_PROGRAMS)
+arm_fifo_read$(EXEEXT): $(arm_fifo_read_OBJECTS) $(arm_fifo_read_DEPENDENCIES) $(EXTRA_arm_fifo_read_DEPENDENCIES) 
+	@rm -f arm_fifo_read$(EXEEXT)
+	$(LINK) $(arm_fifo_read_OBJECTS) $(arm_fifo_read_LDADD) $(LIBS)
+arm_fifo_write$(EXEEXT): $(arm_fifo_write_OBJECTS) $(arm_fifo_write_DEPENDENCIES) $(EXTRA_arm_fifo_write_DEPENDENCIES) 
+	@rm -f arm_fifo_write$(EXEEXT)
+	$(LINK) $(arm_fifo_write_OBJECTS) $(arm_fifo_write_LDADD) $(LIBS)
+arm_pipetest_second$(EXEEXT): $(arm_pipetest_second_OBJECTS) $(arm_pipetest_second_DEPENDENCIES) $(EXTRA_arm_pipetest_second_DEPENDENCIES) 
+	@rm -f arm_pipetest_second$(EXEEXT)
+	$(LINK) $(arm_pipetest_second_OBJECTS) $(arm_pipetest_second_LDADD) $(LIBS)
+arm_pipetest_simple$(EXEEXT): $(arm_pipetest_simple_OBJECTS) $(arm_pipetest_simple_DEPENDENCIES) $(EXTRA_arm_pipetest_simple_DEPENDENCIES) 
+	@rm -f arm_pipetest_simple$(EXEEXT)
+	$(LINK) $(arm_pipetest_simple_OBJECTS) $(arm_pipetest_simple_LDADD) $(LIBS)
+fifo_read$(EXEEXT): $(fifo_read_OBJECTS) $(fifo_read_DEPENDENCIES) $(EXTRA_fifo_read_DEPENDENCIES) 
+	@rm -f fifo_read$(EXEEXT)
+	$(LINK) $(fifo_read_OBJECTS) $(fifo_read_LDADD) $(LIBS)
+fifo_write$(EXEEXT): $(fifo_write_OBJECTS) $(fifo_write_DEPENDENCIES) $(EXTRA_fifo_write_DEPENDENCIES) 
+	@rm -f fifo_write$(EXEEXT)
+	$(LINK) $(fifo_write_OBJECTS) $(fifo_write_LDADD) $(LIBS)
 pipetest_second$(EXEEXT): $(pipetest_second_OBJECTS) $(pipetest_second_DEPENDENCIES) $(EXTRA_pipetest_second_DEPENDENCIES) 
 	@rm -f pipetest_second$(EXEEXT)
 	$(LINK) $(pipetest_second_OBJECTS) $(pipetest_second_LDADD) $(LIBS)
+pipetest_simple$(EXEEXT): $(pipetest_simple_OBJECTS) $(pipetest_simple_DEPENDENCIES) $(EXTRA_pipetest_simple_DEPENDENCIES) 
+	@rm -f pipetest_simple$(EXEEXT)
+	$(LINK) $(pipetest_simple_OBJECTS) $(pipetest_simple_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -233,6 +287,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fifo_read.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fifo_write.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pipetest_simple.Po@am__quote@
 
 .c.o:
@@ -335,7 +391,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(PROGRAMS)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)"; do \
+	for dir in "$(DESTDIR)$(sbindir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -370,7 +426,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-generic clean-sbinPROGRAMS mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -396,7 +452,7 @@ install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-binPROGRAMS
+install-exec-am: install-sbinPROGRAMS
 
 install-html: install-html-am
 
@@ -435,22 +491,22 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS
+uninstall-am: uninstall-sbinPROGRAMS
 
 .MAKE: install-am install-strip
 
-.PHONY: CTAGS GTAGS all all-am check check-am clean clean-binPROGRAMS \
-	clean-generic ctags distclean distclean-compile \
+.PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
+	clean-sbinPROGRAMS ctags distclean distclean-compile \
 	distclean-generic distclean-tags distdir dvi dvi-am html \
-	html-am info info-am install install-am install-binPROGRAMS \
-	install-data install-data-am install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
+	html-am info info-am install install-am install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-man install-pdf install-pdf-am \
+	install-ps install-ps-am install-sbinPROGRAMS install-strip \
 	installcheck installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-binPROGRAMS
+	uninstall-am uninstall-sbinPROGRAMS
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

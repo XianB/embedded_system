@@ -33,10 +33,11 @@ int main(int argc, char **argv)
 			printf("read error.\n");
 		}
 
-		ioctl(fd, 0x01, NULL);
+		ioctl(fd,0x01, NULL);
 		ioctl(fd, 0x02, NULL);
 		ioctl(fd, 0x03, NULL);
 
+#if 0
 		while(1)
 		{
 			struct pollfd fds[2];
@@ -58,6 +59,7 @@ int main(int argc, char **argv)
 				printf("timeout\r\n");
 			}
 		}
+	#endif
 		close(fd);
 	}
 
