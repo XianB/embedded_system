@@ -1,0 +1,1 @@
+cmd_/home/xianb/WorkSpace/embedded_system/src/poll/char_dev.ko := ld -r -m elf_x86_64 -T /usr/src/linux-headers-3.11.0-26-generic/scripts/module-common.lds --build-id  -o /home/xianb/WorkSpace/embedded_system/src/poll/char_dev.ko /home/xianb/WorkSpace/embedded_system/src/poll/char_dev.o /home/xianb/WorkSpace/embedded_system/src/poll/char_dev.mod.o

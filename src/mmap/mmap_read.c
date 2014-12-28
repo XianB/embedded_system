@@ -26,9 +26,10 @@ int main(int argc, char ** argv)
 	unsigned int *addr;
 	addr = pmap;
 	addr = pmap + sizeof(char)*BUFLEN;
+	/*从内存空间里取得数据*/
 	printf("id = %id name = %s\n\r", *((int *)addr), (char *)pmap);
 	munmap((void *)pmap, sizeof(char) * BUFLEN);
 	close(fd);
-	printf("umap os\n\r");
+	printf("umap ok\n\r");
 	return 0;
 }

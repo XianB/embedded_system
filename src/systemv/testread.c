@@ -16,8 +16,8 @@ int main(int argc, char ** argv)
 	int shm_id, i;
 	key_t key;
 	people * p_map = NULL;
-//	char * name = "/dev/shm/myshm2";
-	char * name = ".";
+	char * name = "/dev/shm/myshm2";
+//	char * name = "/dev/shm";
 	key = ftok(name, 0);
 	if (key == -1) {
 		perror("ftok error");
@@ -29,6 +29,7 @@ int main(int argc, char ** argv)
 		perror("shmget error");
 		return -1;
 	}
+
 	p_map = (people*)shmat(shm_id, NULL, 0);
 	if ( p_map == NULL) {
 		printf("shmat failed\r\n");
