@@ -19,7 +19,9 @@
 
 static char recv_php_buf[256];  //接收client数据的缓冲  
 static int recv_php_num=0;      //接收client数据的总长度  
+
 const char recv_php_buf1[20]={0x06,0x05,0x04,0x03,0x02,0x01,0x00};  
+
 int main(int argc, char **argv)  
 {  
 	socklen_t clt_addr_len;   //长度
@@ -30,13 +32,16 @@ int main(int argc, char **argv)
 
 	int len;   
 	struct sockaddr_un clt_addr;   /*保存着接受的客户端的地址*/
+
 	struct sockaddr_un srv_addr;   /*srv_addr是服务器*/
+
 	while(1)  
 	{  
 		/*创建用于通信的套接字，通信域为UNIX通信域   */
 		/*listen_fd是套接字*/
 
 		listen_fd=socket(AF_UNIX,SOCK_STREAM,0);   
+
 		if(listen_fd<0)  
 		{   
 			perror("cannot create listening socket");   

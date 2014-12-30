@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 			printf("read error.\n");
 		}
 
-		ioctl(fd,0x01, NULL);
+		ioctl(fd, 0x01, NULL);
 		ioctl(fd, 0x02, NULL);
 		ioctl(fd, 0x03, NULL);
 
