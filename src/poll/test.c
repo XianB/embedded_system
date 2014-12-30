@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 		ioctl(fd, 0x02, NULL);
 		ioctl(fd, 0x03, NULL);
 
-#if 0
+#if 1
 		while(1)
 		{
 			struct pollfd fds[2];

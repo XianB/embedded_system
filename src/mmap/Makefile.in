@@ -32,8 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-sbin_PROGRAMS = mmap_read$(EXEEXT) mmap_write$(EXEEXT) \
-	arm_mmap_write$(EXEEXT) arm_mmap_read$(EXEEXT)
+sbin_PROGRAMS = mmap_read$(EXEEXT) mmap_write$(EXEEXT)
 subdir = mmap
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -46,12 +45,6 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(sbindir)"
 PROGRAMS = $(sbin_PROGRAMS)
-am_arm_mmap_read_OBJECTS = mmap_read.$(OBJEXT)
-arm_mmap_read_OBJECTS = $(am_arm_mmap_read_OBJECTS)
-arm_mmap_read_LDADD = $(LDADD)
-am_arm_mmap_write_OBJECTS = mmap_write.$(OBJEXT)
-arm_mmap_write_OBJECTS = $(am_arm_mmap_write_OBJECTS)
-arm_mmap_write_LDADD = $(LDADD)
 am_mmap_read_OBJECTS = mmap_read.$(OBJEXT)
 mmap_read_OBJECTS = $(am_mmap_read_OBJECTS)
 mmap_read_LDADD = $(LDADD)
@@ -66,10 +59,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(arm_mmap_read_SOURCES) $(arm_mmap_write_SOURCES) \
-	$(mmap_read_SOURCES) $(mmap_write_SOURCES)
-DIST_SOURCES = $(arm_mmap_read_SOURCES) $(arm_mmap_write_SOURCES) \
-	$(mmap_read_SOURCES) $(mmap_write_SOURCES)
+SOURCES = $(mmap_read_SOURCES) $(mmap_write_SOURCES)
+DIST_SOURCES = $(mmap_read_SOURCES) $(mmap_write_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -161,8 +152,6 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 mmap_write_SOURCES = mmap_write.c
 mmap_read_SOURCES = mmap_read.c
-arm_mmap_write_SOURCES = mmap_write.c
-arm_mmap_read_SOURCES = mmap_read.c
 all: all-am
 
 .SUFFIXES:
@@ -234,12 +223,6 @@ uninstall-sbinPROGRAMS:
 
 clean-sbinPROGRAMS:
 	-test -z "$(sbin_PROGRAMS)" || rm -f $(sbin_PROGRAMS)
-arm_mmap_read$(EXEEXT): $(arm_mmap_read_OBJECTS) $(arm_mmap_read_DEPENDENCIES) $(EXTRA_arm_mmap_read_DEPENDENCIES) 
-	@rm -f arm_mmap_read$(EXEEXT)
-	$(LINK) $(arm_mmap_read_OBJECTS) $(arm_mmap_read_LDADD) $(LIBS)
-arm_mmap_write$(EXEEXT): $(arm_mmap_write_OBJECTS) $(arm_mmap_write_DEPENDENCIES) $(EXTRA_arm_mmap_write_DEPENDENCIES) 
-	@rm -f arm_mmap_write$(EXEEXT)
-	$(LINK) $(arm_mmap_write_OBJECTS) $(arm_mmap_write_LDADD) $(LIBS)
 mmap_read$(EXEEXT): $(mmap_read_OBJECTS) $(mmap_read_DEPENDENCIES) $(EXTRA_mmap_read_DEPENDENCIES) 
 	@rm -f mmap_read$(EXEEXT)
 	$(LINK) $(mmap_read_OBJECTS) $(mmap_read_LDADD) $(LIBS)

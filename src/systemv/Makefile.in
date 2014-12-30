@@ -32,8 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-sbin_PROGRAMS = testwrite$(EXEEXT) testread$(EXEEXT) \
-	arm_testwrite$(EXEEXT) arm_testread$(EXEEXT)
+sbin_PROGRAMS = testwrite$(EXEEXT) testread$(EXEEXT)
 subdir = systemv
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -46,12 +45,6 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(sbindir)"
 PROGRAMS = $(sbin_PROGRAMS)
-am_arm_testread_OBJECTS = testwrite.$(OBJEXT)
-arm_testread_OBJECTS = $(am_arm_testread_OBJECTS)
-arm_testread_LDADD = $(LDADD)
-am_arm_testwrite_OBJECTS = testwrite.$(OBJEXT)
-arm_testwrite_OBJECTS = $(am_arm_testwrite_OBJECTS)
-arm_testwrite_LDADD = $(LDADD)
 am_testread_OBJECTS = testwrite.$(OBJEXT)
 testread_OBJECTS = $(am_testread_OBJECTS)
 testread_LDADD = $(LDADD)
@@ -66,10 +59,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(arm_testread_SOURCES) $(arm_testwrite_SOURCES) \
-	$(testread_SOURCES) $(testwrite_SOURCES)
-DIST_SOURCES = $(arm_testread_SOURCES) $(arm_testwrite_SOURCES) \
-	$(testread_SOURCES) $(testwrite_SOURCES)
+SOURCES = $(testread_SOURCES) $(testwrite_SOURCES)
+DIST_SOURCES = $(testread_SOURCES) $(testwrite_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -161,8 +152,6 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 testwrite_SOURCES = testwrite.c
 testread_SOURCES = testwrite.c
-arm_testwrite_SOURCES = testwrite.c
-arm_testread_SOURCES = testwrite.c
 all: all-am
 
 .SUFFIXES:
@@ -234,12 +223,6 @@ uninstall-sbinPROGRAMS:
 
 clean-sbinPROGRAMS:
 	-test -z "$(sbin_PROGRAMS)" || rm -f $(sbin_PROGRAMS)
-arm_testread$(EXEEXT): $(arm_testread_OBJECTS) $(arm_testread_DEPENDENCIES) $(EXTRA_arm_testread_DEPENDENCIES) 
-	@rm -f arm_testread$(EXEEXT)
-	$(LINK) $(arm_testread_OBJECTS) $(arm_testread_LDADD) $(LIBS)
-arm_testwrite$(EXEEXT): $(arm_testwrite_OBJECTS) $(arm_testwrite_DEPENDENCIES) $(EXTRA_arm_testwrite_DEPENDENCIES) 
-	@rm -f arm_testwrite$(EXEEXT)
-	$(LINK) $(arm_testwrite_OBJECTS) $(arm_testwrite_LDADD) $(LIBS)
 testread$(EXEEXT): $(testread_OBJECTS) $(testread_DEPENDENCIES) $(EXTRA_testread_DEPENDENCIES) 
 	@rm -f testread$(EXEEXT)
 	$(LINK) $(testread_OBJECTS) $(testread_LDADD) $(LIBS)

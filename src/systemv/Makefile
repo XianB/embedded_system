@@ -32,8 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-sbin_PROGRAMS = testwrite$(EXEEXT) testread$(EXEEXT) \
-	arm_testwrite$(EXEEXT) arm_testread$(EXEEXT)
+sbin_PROGRAMS = testwrite$(EXEEXT) testread$(EXEEXT)
 subdir = systemv
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -46,12 +45,6 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(sbindir)"
 PROGRAMS = $(sbin_PROGRAMS)
-am_arm_testread_OBJECTS = testwrite.$(OBJEXT)
-arm_testread_OBJECTS = $(am_arm_testread_OBJECTS)
-arm_testread_LDADD = $(LDADD)
-am_arm_testwrite_OBJECTS = testwrite.$(OBJEXT)
-arm_testwrite_OBJECTS = $(am_arm_testwrite_OBJECTS)
-arm_testwrite_LDADD = $(LDADD)
 am_testread_OBJECTS = testwrite.$(OBJEXT)
 testread_OBJECTS = $(am_testread_OBJECTS)
 testread_LDADD = $(LDADD)
@@ -66,10 +59,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(arm_testread_SOURCES) $(arm_testwrite_SOURCES) \
-	$(testread_SOURCES) $(testwrite_SOURCES)
-DIST_SOURCES = $(arm_testread_SOURCES) $(arm_testwrite_SOURCES) \
-	$(testread_SOURCES) $(testwrite_SOURCES)
+SOURCES = $(testread_SOURCES) $(testwrite_SOURCES)
+DIST_SOURCES = $(testread_SOURCES) $(testwrite_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -79,10 +70,10 @@ AUTOCONF = ${SHELL} /home/xianb/WorkSpace/embedded_system/src/missing --run auto
 AUTOHEADER = ${SHELL} /home/xianb/WorkSpace/embedded_system/src/missing --run autoheader
 AUTOMAKE = ${SHELL} /home/xianb/WorkSpace/embedded_system/src/missing --run automake-1.11
 AWK = mawk
-CC = gcc
+CC = arm-linux-gnueabi-gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
-CPP = gcc -E
+CPP = arm-linux-gnueabi-gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
@@ -115,13 +106,13 @@ PACKAGE_VERSION = v1.0
 PATH_SEPARATOR = :
 SET_MAKE = 
 SHELL = /bin/bash
-STRIP = 
+STRIP = arm-linux-gnueabi-strip
 VERSION = v1.0
 abs_builddir = /home/xianb/WorkSpace/embedded_system/src/systemv
 abs_srcdir = /home/xianb/WorkSpace/embedded_system/src/systemv
 abs_top_builddir = /home/xianb/WorkSpace/embedded_system/src
 abs_top_srcdir = /home/xianb/WorkSpace/embedded_system/src
-ac_ct_CC = gcc
+ac_ct_CC = 
 am__include = include
 am__leading_dot = .
 am__quote = 
@@ -135,7 +126,7 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host_alias = 
+host_alias = arm-linux-gnueabi
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
@@ -148,7 +139,7 @@ mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /home/xianb/WorkSpace/embedded_system/src/bin
+prefix = /home/xianb/WorkSpace/nfs
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -161,8 +152,6 @@ top_builddir = ..
 top_srcdir = ..
 testwrite_SOURCES = testwrite.c
 testread_SOURCES = testwrite.c
-arm_testwrite_SOURCES = testwrite.c
-arm_testread_SOURCES = testwrite.c
 all: all-am
 
 .SUFFIXES:
@@ -234,12 +223,6 @@ uninstall-sbinPROGRAMS:
 
 clean-sbinPROGRAMS:
 	-test -z "$(sbin_PROGRAMS)" || rm -f $(sbin_PROGRAMS)
-arm_testread$(EXEEXT): $(arm_testread_OBJECTS) $(arm_testread_DEPENDENCIES) $(EXTRA_arm_testread_DEPENDENCIES) 
-	@rm -f arm_testread$(EXEEXT)
-	$(LINK) $(arm_testread_OBJECTS) $(arm_testread_LDADD) $(LIBS)
-arm_testwrite$(EXEEXT): $(arm_testwrite_OBJECTS) $(arm_testwrite_DEPENDENCIES) $(EXTRA_arm_testwrite_DEPENDENCIES) 
-	@rm -f arm_testwrite$(EXEEXT)
-	$(LINK) $(arm_testwrite_OBJECTS) $(arm_testwrite_LDADD) $(LIBS)
 testread$(EXEEXT): $(testread_OBJECTS) $(testread_DEPENDENCIES) $(EXTRA_testread_DEPENDENCIES) 
 	@rm -f testread$(EXEEXT)
 	$(LINK) $(testread_OBJECTS) $(testread_LDADD) $(LIBS)

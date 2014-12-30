@@ -32,8 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-sbin_PROGRAMS = server$(EXEEXT) client$(EXEEXT) arm_server$(EXEEXT) \
-	arm_client$(EXEEXT)
+sbin_PROGRAMS = server$(EXEEXT) client$(EXEEXT)
 subdir = unix_socket
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -46,12 +45,6 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(sbindir)"
 PROGRAMS = $(sbin_PROGRAMS)
-am_arm_client_OBJECTS = client.$(OBJEXT)
-arm_client_OBJECTS = $(am_arm_client_OBJECTS)
-arm_client_LDADD = $(LDADD)
-am_arm_server_OBJECTS = server.$(OBJEXT)
-arm_server_OBJECTS = $(am_arm_server_OBJECTS)
-arm_server_LDADD = $(LDADD)
 am_client_OBJECTS = client.$(OBJEXT)
 client_OBJECTS = $(am_client_OBJECTS)
 client_LDADD = $(LDADD)
@@ -66,10 +59,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(arm_client_SOURCES) $(arm_server_SOURCES) \
-	$(client_SOURCES) $(server_SOURCES)
-DIST_SOURCES = $(arm_client_SOURCES) $(arm_server_SOURCES) \
-	$(client_SOURCES) $(server_SOURCES)
+SOURCES = $(client_SOURCES) $(server_SOURCES)
+DIST_SOURCES = $(client_SOURCES) $(server_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -161,8 +152,6 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 server_SOURCES = server.c
 client_SOURCES = client.c
-arm_client_SOURCES = client.c
-arm_server_SOURCES = server.c
 all: all-am
 
 .SUFFIXES:
@@ -234,12 +223,6 @@ uninstall-sbinPROGRAMS:
 
 clean-sbinPROGRAMS:
 	-test -z "$(sbin_PROGRAMS)" || rm -f $(sbin_PROGRAMS)
-arm_client$(EXEEXT): $(arm_client_OBJECTS) $(arm_client_DEPENDENCIES) $(EXTRA_arm_client_DEPENDENCIES) 
-	@rm -f arm_client$(EXEEXT)
-	$(LINK) $(arm_client_OBJECTS) $(arm_client_LDADD) $(LIBS)
-arm_server$(EXEEXT): $(arm_server_OBJECTS) $(arm_server_DEPENDENCIES) $(EXTRA_arm_server_DEPENDENCIES) 
-	@rm -f arm_server$(EXEEXT)
-	$(LINK) $(arm_server_OBJECTS) $(arm_server_LDADD) $(LIBS)
 client$(EXEEXT): $(client_OBJECTS) $(client_DEPENDENCIES) $(EXTRA_client_DEPENDENCIES) 
 	@rm -f client$(EXEEXT)
 	$(LINK) $(client_OBJECTS) $(client_LDADD) $(LIBS)

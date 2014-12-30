@@ -32,8 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-sbin_PROGRAMS = mmap_read$(EXEEXT) mmap_write$(EXEEXT) \
-	arm_mmap_write$(EXEEXT) arm_mmap_read$(EXEEXT)
+sbin_PROGRAMS = mmap_read$(EXEEXT) mmap_write$(EXEEXT)
 subdir = mmap
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -46,12 +45,6 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(sbindir)"
 PROGRAMS = $(sbin_PROGRAMS)
-am_arm_mmap_read_OBJECTS = mmap_read.$(OBJEXT)
-arm_mmap_read_OBJECTS = $(am_arm_mmap_read_OBJECTS)
-arm_mmap_read_LDADD = $(LDADD)
-am_arm_mmap_write_OBJECTS = mmap_write.$(OBJEXT)
-arm_mmap_write_OBJECTS = $(am_arm_mmap_write_OBJECTS)
-arm_mmap_write_LDADD = $(LDADD)
 am_mmap_read_OBJECTS = mmap_read.$(OBJEXT)
 mmap_read_OBJECTS = $(am_mmap_read_OBJECTS)
 mmap_read_LDADD = $(LDADD)
@@ -66,10 +59,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(arm_mmap_read_SOURCES) $(arm_mmap_write_SOURCES) \
-	$(mmap_read_SOURCES) $(mmap_write_SOURCES)
-DIST_SOURCES = $(arm_mmap_read_SOURCES) $(arm_mmap_write_SOURCES) \
-	$(mmap_read_SOURCES) $(mmap_write_SOURCES)
+SOURCES = $(mmap_read_SOURCES) $(mmap_write_SOURCES)
+DIST_SOURCES = $(mmap_read_SOURCES) $(mmap_write_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -79,10 +70,10 @@ AUTOCONF = ${SHELL} /home/xianb/WorkSpace/embedded_system/src/missing --run auto
 AUTOHEADER = ${SHELL} /home/xianb/WorkSpace/embedded_system/src/missing --run autoheader
 AUTOMAKE = ${SHELL} /home/xianb/WorkSpace/embedded_system/src/missing --run automake-1.11
 AWK = mawk
-CC = gcc
+CC = arm-linux-gnueabi-gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
-CPP = gcc -E
+CPP = arm-linux-gnueabi-gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
@@ -115,13 +106,13 @@ PACKAGE_VERSION = v1.0
 PATH_SEPARATOR = :
 SET_MAKE = 
 SHELL = /bin/bash
-STRIP = 
+STRIP = arm-linux-gnueabi-strip
 VERSION = v1.0
 abs_builddir = /home/xianb/WorkSpace/embedded_system/src/mmap
 abs_srcdir = /home/xianb/WorkSpace/embedded_system/src/mmap
 abs_top_builddir = /home/xianb/WorkSpace/embedded_system/src
 abs_top_srcdir = /home/xianb/WorkSpace/embedded_system/src
-ac_ct_CC = gcc
+ac_ct_CC = 
 am__include = include
 am__leading_dot = .
 am__quote = 
@@ -135,7 +126,7 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host_alias = 
+host_alias = arm-linux-gnueabi
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
@@ -148,7 +139,7 @@ mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /home/xianb/WorkSpace/embedded_system/src/bin
+prefix = /home/xianb/WorkSpace/nfs
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -161,8 +152,6 @@ top_builddir = ..
 top_srcdir = ..
 mmap_write_SOURCES = mmap_write.c
 mmap_read_SOURCES = mmap_read.c
-arm_mmap_write_SOURCES = mmap_write.c
-arm_mmap_read_SOURCES = mmap_read.c
 all: all-am
 
 .SUFFIXES:
@@ -234,12 +223,6 @@ uninstall-sbinPROGRAMS:
 
 clean-sbinPROGRAMS:
 	-test -z "$(sbin_PROGRAMS)" || rm -f $(sbin_PROGRAMS)
-arm_mmap_read$(EXEEXT): $(arm_mmap_read_OBJECTS) $(arm_mmap_read_DEPENDENCIES) $(EXTRA_arm_mmap_read_DEPENDENCIES) 
-	@rm -f arm_mmap_read$(EXEEXT)
-	$(LINK) $(arm_mmap_read_OBJECTS) $(arm_mmap_read_LDADD) $(LIBS)
-arm_mmap_write$(EXEEXT): $(arm_mmap_write_OBJECTS) $(arm_mmap_write_DEPENDENCIES) $(EXTRA_arm_mmap_write_DEPENDENCIES) 
-	@rm -f arm_mmap_write$(EXEEXT)
-	$(LINK) $(arm_mmap_write_OBJECTS) $(arm_mmap_write_LDADD) $(LIBS)
 mmap_read$(EXEEXT): $(mmap_read_OBJECTS) $(mmap_read_DEPENDENCIES) $(EXTRA_mmap_read_DEPENDENCIES) 
 	@rm -f mmap_read$(EXEEXT)
 	$(LINK) $(mmap_read_OBJECTS) $(mmap_read_LDADD) $(LIBS)

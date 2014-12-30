@@ -33,9 +33,7 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 sbin_PROGRAMS = pipetest_simple$(EXEEXT) pipetest_second$(EXEEXT) \
-	arm_pipetest_simple$(EXEEXT) arm_pipetest_second$(EXEEXT) \
-	fifo_read$(EXEEXT) fifo_write$(EXEEXT) arm_fifo_read$(EXEEXT) \
-	arm_fifo_write$(EXEEXT)
+	fifo_read$(EXEEXT) fifo_write$(EXEEXT)
 subdir = fifo
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -48,18 +46,6 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(sbindir)"
 PROGRAMS = $(sbin_PROGRAMS)
-am_arm_fifo_read_OBJECTS = fifo_read.$(OBJEXT)
-arm_fifo_read_OBJECTS = $(am_arm_fifo_read_OBJECTS)
-arm_fifo_read_LDADD = $(LDADD)
-am_arm_fifo_write_OBJECTS = fifo_write.$(OBJEXT)
-arm_fifo_write_OBJECTS = $(am_arm_fifo_write_OBJECTS)
-arm_fifo_write_LDADD = $(LDADD)
-am_arm_pipetest_second_OBJECTS = pipetest_simple.$(OBJEXT)
-arm_pipetest_second_OBJECTS = $(am_arm_pipetest_second_OBJECTS)
-arm_pipetest_second_LDADD = $(LDADD)
-am_arm_pipetest_simple_OBJECTS = pipetest_simple.$(OBJEXT)
-arm_pipetest_simple_OBJECTS = $(am_arm_pipetest_simple_OBJECTS)
-arm_pipetest_simple_LDADD = $(LDADD)
 am_fifo_read_OBJECTS = fifo_read.$(OBJEXT)
 fifo_read_OBJECTS = $(am_fifo_read_OBJECTS)
 fifo_read_LDADD = $(LDADD)
@@ -80,13 +66,9 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(arm_fifo_read_SOURCES) $(arm_fifo_write_SOURCES) \
-	$(arm_pipetest_second_SOURCES) $(arm_pipetest_simple_SOURCES) \
-	$(fifo_read_SOURCES) $(fifo_write_SOURCES) \
+SOURCES = $(fifo_read_SOURCES) $(fifo_write_SOURCES) \
 	$(pipetest_second_SOURCES) $(pipetest_simple_SOURCES)
-DIST_SOURCES = $(arm_fifo_read_SOURCES) $(arm_fifo_write_SOURCES) \
-	$(arm_pipetest_second_SOURCES) $(arm_pipetest_simple_SOURCES) \
-	$(fifo_read_SOURCES) $(fifo_write_SOURCES) \
+DIST_SOURCES = $(fifo_read_SOURCES) $(fifo_write_SOURCES) \
 	$(pipetest_second_SOURCES) $(pipetest_simple_SOURCES)
 ETAGS = etags
 CTAGS = ctags
@@ -179,12 +161,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 pipetest_simple_SOURCES = pipetest_simple.c 
 pipetest_second_SOURCES = pipetest_simple.c 
-arm_pipetest_simple_SOURCES = pipetest_simple.c 
-arm_pipetest_second_SOURCES = pipetest_simple.c 
 fifo_read_SOURCES = fifo_read.c
 fifo_write_SOURCES = fifo_write.c
-arm_fifo_read_SOURCES = fifo_read.c
-arm_fifo_write_SOURCES = fifo_write.c
 all: all-am
 
 .SUFFIXES:
@@ -256,18 +234,6 @@ uninstall-sbinPROGRAMS:
 
 clean-sbinPROGRAMS:
 	-test -z "$(sbin_PROGRAMS)" || rm -f $(sbin_PROGRAMS)
-arm_fifo_read$(EXEEXT): $(arm_fifo_read_OBJECTS) $(arm_fifo_read_DEPENDENCIES) $(EXTRA_arm_fifo_read_DEPENDENCIES) 
-	@rm -f arm_fifo_read$(EXEEXT)
-	$(LINK) $(arm_fifo_read_OBJECTS) $(arm_fifo_read_LDADD) $(LIBS)
-arm_fifo_write$(EXEEXT): $(arm_fifo_write_OBJECTS) $(arm_fifo_write_DEPENDENCIES) $(EXTRA_arm_fifo_write_DEPENDENCIES) 
-	@rm -f arm_fifo_write$(EXEEXT)
-	$(LINK) $(arm_fifo_write_OBJECTS) $(arm_fifo_write_LDADD) $(LIBS)
-arm_pipetest_second$(EXEEXT): $(arm_pipetest_second_OBJECTS) $(arm_pipetest_second_DEPENDENCIES) $(EXTRA_arm_pipetest_second_DEPENDENCIES) 
-	@rm -f arm_pipetest_second$(EXEEXT)
-	$(LINK) $(arm_pipetest_second_OBJECTS) $(arm_pipetest_second_LDADD) $(LIBS)
-arm_pipetest_simple$(EXEEXT): $(arm_pipetest_simple_OBJECTS) $(arm_pipetest_simple_DEPENDENCIES) $(EXTRA_arm_pipetest_simple_DEPENDENCIES) 
-	@rm -f arm_pipetest_simple$(EXEEXT)
-	$(LINK) $(arm_pipetest_simple_OBJECTS) $(arm_pipetest_simple_LDADD) $(LIBS)
 fifo_read$(EXEEXT): $(fifo_read_OBJECTS) $(fifo_read_DEPENDENCIES) $(EXTRA_fifo_read_DEPENDENCIES) 
 	@rm -f fifo_read$(EXEEXT)
 	$(LINK) $(fifo_read_OBJECTS) $(fifo_read_LDADD) $(LIBS)
