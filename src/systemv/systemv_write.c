@@ -3,7 +3,6 @@
 #include <sys/shm.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <string.h>
 typedef struct
 {
 	char name[4];

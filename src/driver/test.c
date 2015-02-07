@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 	int ret = 0;
 	int fd = open("/dev/globalvar", O_RDWR, S_IRUSR|S_IWUSR);
 	assert(fd != 0);
-#if 0
+#if 1
 	if (write(fd, &writenum, sizeof(writenum)) < 0 )
 	{
 		printf("write failed.\r\n");

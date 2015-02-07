@@ -26,7 +26,7 @@
 #define HAVE_MKFIFO 1
 
 /* Define to 1 if you have a working `mmap' system call. */
-/* #undef HAVE_MMAP */
+#define HAVE_MMAP 1
 
 /* Define to 1 if you have the `munmap' function. */
 #define HAVE_MUNMAP 1
